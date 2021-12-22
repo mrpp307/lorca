@@ -1,5 +1,3 @@
-module github.com/mrpp307/lorca
+module github.com/mrpp307
 
-go 1.16
-
-require golang.org/x/net v0.0.0-20200222125558-5a598a2470a0
+go 1.17
