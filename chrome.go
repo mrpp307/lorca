@@ -7,11 +7,13 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
+
 	"os/exec"
 	"regexp"
 	"sync"
 	"sync/atomic"
+
+	log "github.com/sirupsen/logrus"
 
 	"golang.org/x/net/websocket"
 )
@@ -270,7 +272,10 @@ func (c *chrome) readLoop() {
 			json.Unmarshal([]byte(params.Message), &res)
 
 			if res.ID == 0 && res.Method == "Runtime.consoleAPICalled" || res.Method == "Runtime.exceptionThrown" {
-				log.Println(params.Message)
+				var logJson map[string]map[string][]interface{}
+				json.Unmarshal([]byte(params.Message), &logJson)
+
+				log.Info(logJson["params"]["args"][0])
 			} else if res.ID == 0 && res.Method == "Runtime.bindingCalled" {
 				payload := struct {
 					Name string            `json:"name"`
