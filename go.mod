@@ -1,4 +1,4 @@
-module github.com/mrpp307
+module github.com/mrpp307/lorca
 
 go 1.17
 
